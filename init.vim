@@ -9,17 +9,21 @@ Plug 'vim-airline/vim-airline'
 Plug 'lifepillar/vim-solarized8'
 Plug 'https://github.com/Lokaltog/powerline-fonts'
 Plug 'https://github.com/altercation/vim-colors-solarized'
+Plug 'https://github.com/rust-lang/rust.vim'
 
 " COMPLETION
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'clojure-vim/async-clj-omni'
 Plug 'https://github.com/vim-scripts/paredit.vim.git'
+"Plug 'https://github.com/guns/vim-sexp'
 Plug 'https://github.com/tpope/vim-fireplace.git'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'git://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/guns/vim-clojure-static'
 Plug 'https://github.com/vim-scripts/BufOnly.vim.git'
+Plug 'https://github.com/sebastianmarkow/deoplete-rust'
+Plug 'https://github.com/Townk/vim-autoclose'
 
 call plug#end()
 
@@ -44,7 +48,7 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
-let g:sexp_insert_after_wrap = 0
+let g:paredit_electric_return=0
 
 " LAYOUT
 
@@ -75,3 +79,9 @@ nnoremap <leader><Space> :BufOnly<CR>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 :nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+
+" RUST
+
+let g:deoplete#sources#rust#racer_binary='/usr/local/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='/home/tetigi/opt/rust/src'
+let g:rustfmt_autosave = 1
