@@ -22,8 +22,13 @@ Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'git://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/guns/vim-clojure-static'
 Plug 'https://github.com/vim-scripts/BufOnly.vim.git'
-Plug 'https://github.com/sebastianmarkow/deoplete-rust'
+"Plug 'https://github.com/sebastianmarkow/deoplete-rust'
 Plug 'https://github.com/Townk/vim-autoclose'
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 call plug#end()
 
@@ -78,10 +83,26 @@ nnoremap <leader>ee :Eval<CR>
 nnoremap <leader><Space> :BufOnly<CR>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
 " RUST
-
 let g:deoplete#sources#rust#racer_binary='/usr/local/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/home/tetigi/opt/rust/src'
 let g:rustfmt_autosave = 1
+
+" LanguageServer
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'nightly-2018-12-06', 'rls']
+    \ }
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition({ 'gotoCmd': 'tabedit' })<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+let g:LanguageClient_autoStart = 1
+set signcolumn=yes
+highlight ALEErrorSign guifg=red guibg=Grey15
+highlight ALEInfoSign guifg=lightblue guibg=Grey15
+highlight ALEWarningSign guifg=orange guibg=Grey15
